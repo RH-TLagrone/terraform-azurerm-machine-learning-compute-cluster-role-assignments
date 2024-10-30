@@ -12,7 +12,7 @@ Terraform module for Azure Machine Learning (AML) [compute cluster](https://regi
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.16.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.6.0 |
 
 ## Modules
 
@@ -22,6 +22,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [azurerm_key_vault_access_policy.user](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
 | [azurerm_role_assignment.azureml_data_scientist](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.cognitive_services_user](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.key_vault_certificate_user](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
@@ -34,7 +35,9 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_compute_cluster_principal_id"></a> [compute\_cluster\_principal\_id](#input\_compute\_cluster\_principal\_id) | The principal ID (object ID) of the AzureML compute cluster MSI to which to assign AzureRM roles. | `string` | n/a | yes |
+| <a name="input_compute_cluster_principal_id"></a> [compute\_cluster\_principal\_id](#input\_compute\_cluster\_principal\_id) | The principal id (object id) of the AzureML compute cluster MSI to which to assign AzureRM roles and for which to create an Azure Key Vault (AKV) access policy. | `string` | n/a | yes |
+| <a name="input_compute_cluster_tenant_id"></a> [compute\_cluster\_tenant\_id](#input\_compute\_cluster\_tenant\_id) | The tenant id of the compute cluster principal for which to create an Azure Key Vault (AKV) access policy. | `string` | n/a | yes |
+| <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | The resource id of the Azure Key Vault (AKV) for which to create an access policy. | `string` | n/a | yes |
 | <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | The resource id of the resource group to use as the scope for AzureRM role assignments. | `string` | n/a | yes |
 
 ## Outputs
@@ -43,6 +46,7 @@ No modules.
 |------|-------------|
 | <a name="output_azureml_data_scientist_role_assignment_id"></a> [azureml\_data\_scientist\_role\_assignment\_id](#output\_azureml\_data\_scientist\_role\_assignment\_id) | The resource id of the AzureML Data Scientist role assignment. |
 | <a name="output_cognitive_services_user_role_assignment_id"></a> [cognitive\_services\_user\_role\_assignment\_id](#output\_cognitive\_services\_user\_role\_assignment\_id) | The resource id of the Cognitive Services User role assignment. |
+| <a name="output_key_vault_access_policy_id"></a> [key\_vault\_access\_policy\_id](#output\_key\_vault\_access\_policy\_id) | The resource id of the key vault access policy. |
 | <a name="output_key_vault_certificate_user_role_assignment_id"></a> [key\_vault\_certificate\_user\_role\_assignment\_id](#output\_key\_vault\_certificate\_user\_role\_assignment\_id) | The resource id of the Key Vault Certificate User role assignment. |
 | <a name="output_key_vault_crypto_user_role_assignment_id"></a> [key\_vault\_crypto\_user\_role\_assignment\_id](#output\_key\_vault\_crypto\_user\_role\_assignment\_id) | The resource id of the Key Vault Crypto User role assignment. |
 | <a name="output_key_vault_secrets_user_role_assignment_id"></a> [key\_vault\_secrets\_user\_role\_assignment\_id](#output\_key\_vault\_secrets\_user\_role\_assignment\_id) | The resource id of the Key Vault Secrets User role assignment. |

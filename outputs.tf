@@ -32,3 +32,8 @@ output "reader_and_data_access_role_assignment_id" {
   value       = azurerm_role_assignment.reader_and_data_access.id
   description = "The resource id of the Reader and Data Access role assignment."
 }
+
+output "key_vault_access_policy_id" {
+  value       = azurerm_key_vault_access_policy.user.id
+  description = "The resource id of the key vault access policy."
+}

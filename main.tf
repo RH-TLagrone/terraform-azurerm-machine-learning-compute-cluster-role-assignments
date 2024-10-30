@@ -8,47 +8,80 @@ terraform {
 }
 
 resource "azurerm_role_assignment" "reader" {
-  role_definition_name = "Reader"  # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/general#reader
+  role_definition_name = "Reader" # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/general#reader
   scope                = var.resource_group_id
   principal_id         = var.compute_cluster_principal_id
 }
 
 resource "azurerm_role_assignment" "azureml_data_scientist" {
-  role_definition_name = "AzureML Data Scientist"  # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/ai-machine-learning#azureml-data-scientist
+  role_definition_name = "AzureML Data Scientist" # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/ai-machine-learning#azureml-data-scientist
   scope                = var.resource_group_id
   principal_id         = var.compute_cluster_principal_id
 }
 
 resource "azurerm_role_assignment" "cognitive_services_user" {
-  role_definition_name = "Cognitive Services User"  # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/ai-machine-learning#cognitive-services-user
+  role_definition_name = "Cognitive Services User" # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/ai-machine-learning#cognitive-services-user
   scope                = var.resource_group_id
   principal_id         = var.compute_cluster_principal_id
 }
 
 resource "azurerm_role_assignment" "key_vault_certificate_user" {
   # Only works for key vaults that use the 'Azure role-based access control' permission model.
-  role_definition_name = "Key Vault Certificate User"  # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/security#key-vault-certificate-user
+  role_definition_name = "Key Vault Certificate User" # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/security#key-vault-certificate-user
   scope                = var.resource_group_id
   principal_id         = var.compute_cluster_principal_id
 }
 
 resource "azurerm_role_assignment" "key_vault_crypto_user" {
   # Only works for key vaults that use the 'Azure role-based access control' permission model.
-  role_definition_name = "Key Vault Crypto User"  # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/security#key-vault-crypto-user
+  role_definition_name = "Key Vault Crypto User" # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/security#key-vault-crypto-user
   scope                = var.resource_group_id
   principal_id         = var.compute_cluster_principal_id
 }
 
 resource "azurerm_role_assignment" "key_vault_secrets_user" {
   # Only works for key vaults that use the 'Azure role-based access control' permission model.
-  role_definition_name = "Key Vault Secrets User"  # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/security#key-vault-secrets-user
+  role_definition_name = "Key Vault Secrets User" # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/security#key-vault-secrets-user
   scope                = var.resource_group_id
   principal_id         = var.compute_cluster_principal_id
 }
 
 resource "azurerm_role_assignment" "reader_and_data_access" {
   # Only applies to Storage Accounts.
-  role_definition_name = "Reader and Data Access"  # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/storage#reader-and-data-access
+  role_definition_name = "Reader and Data Access" # https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/storage#reader-and-data-access
   scope                = var.resource_group_id
   principal_id         = var.compute_cluster_principal_id
+}
+
+resource "azurerm_key_vault_access_policy" "user" {
+  key_vault_id = var.key_vault_id
+  tenant_id    = var.compute_cluster_tenant_id
+  object_id    = var.compute_cluster_principal_id
+
+  certificate_permissions = [
+    "Get",
+    "GetIssuers",
+    "List",
+    "ListIssuers",
+  ]
+  key_permissions = [
+    "Decrypt",
+    "Encrypt",
+    "Get",
+    "List",
+    "Sign",
+    "UnwrapKey",
+    "Verify",
+    "WrapKey",
+  ]
+  secret_permissions = [
+    "Get",
+    "List",
+  ]
+  storage_permissions = [
+    "Get",
+    "GetSAS",
+    "List",
+    "ListSAS",
+  ]
 }
